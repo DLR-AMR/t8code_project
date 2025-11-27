@@ -1,8 +1,13 @@
 # t8code_project
 
 A template repository for projects that link against t8code.
-Copy this project if you want to set up a new project using t8code.
 The project is configured such that it will build as a new library.
+It includes testing with Googletest.
+
+- [ ] Copy this project if you want to set up a new project using t8code.
+- [ ] Replace all strings "t8project" "T8PROJECT" "t8_project" and similar with your project name. In particular in the CMake files.
+
+
 
 ## Install
 
