@@ -19,6 +19,11 @@ project(
   VERSION "${T8PROJECT_VERSION_MAJOR}.${T8PROJECT_VERSION_MINOR}.${T8PROJECT_VERSION_PATCH}"
 )
 
+#
+# Enable "make test" to run all the tests
+#
+include( CTest )
+
 # Set compilers to mpicc and mpicxx
 set(CMAKE_C_COMPILER mpicc)
 set(CMAKE_CXX_COMPILER mpicxx)
