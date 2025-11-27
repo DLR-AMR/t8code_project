@@ -48,3 +48,9 @@ src/t8project_helloworld.cxx and .hxx define a very simple hello world function.
 ### test/
 
 Contains tests.
+
+### thirdparty/
+
+Contains thirdparty libraries.
+This project ships with a copy of googletest-mpi which is compiled and linked to be used in tests.
+In future this copy could be replaced with using FetchContent in Cmake (see also https://github.com/DLR-AMR/t8code/issues/1984).
