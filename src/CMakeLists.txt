@@ -49,6 +49,13 @@ endif()
 #
 configure_file (t8project_vtk_linkage.hxx.in t8project_vtk_linkage.hxx @ONLY)
 
+
+# install the automatically created t8project_vtk_linkage.hxx into the include folder
+install (FILES 
+    ${CMAKE_CURRENT_BINARY_DIR}/t8project_vtk_linkage.hxx
+    DESTINATION include
+)
+
 # Make this package available as a cmake install package, so 
 # that other projects can find it with find_package.
 include( CMakePackageConfigHelpers )
