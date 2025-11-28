@@ -20,6 +20,36 @@ install( FILES
     TYPE INCLUDE
 )
 
+# VTK dependent settings.
+if( T8PROJECT_ENABLE_VTK )
+    # Define T8PROJECT_VTK_MAJOR/MINOR_VERSION to true, such that get defined in t8project_vtk_linkage.hxx
+    set ( T8PROJECT_VTK_MAJOR_VERSION 1 )
+    set ( T8PROJECT_VTK_MINOR_VERSION 1 )
+    # Set CMake variables for lib target
+    target_compile_definitions( t8project PUBLIC T8PROJECT_VTK_VERSION_USED="${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" )
+    target_compile_definitions( t8project PUBLIC T8PROJECT_ENABLE_VTK=1 )
+    target_include_directories( t8project PUBLIC ${VTK_INCLUDE_DIR} )
+    target_link_libraries( t8project PUBLIC ${VTK_LIBRARIES} )
+    # Internal source files that need VTK linkage to compile:
+#    target_sources(T8PROJECT PRIVATE
+#     put/source/file/here
+#    )
+#    
+    # Installed header files that need VTK linkage:
+#    install( FILES
+#     put/header/file/here
+#    DESTINATION include)
+  configure_file (t8project_vtk_linkage.hxx.in t8project_vtk_linkage.hxx @ONLY)
+else ()
+    unset ( T8PROJECT_VTK_MAJOR_VERSION )
+    unset ( T8PROJECT_VTK_MINOR_VERSION )
+endif()
+
+#
+# Setup the file t8project_vtk_linkage.hxx and write macros for the VTK version
+#
+configure_file (t8project_vtk_linkage.hxx.in t8project_vtk_linkage.hxx @ONLY)
+
 # Make this package available as a cmake install package, so 
 # that other projects can find it with find_package.
 include( CMakePackageConfigHelpers )
@@ -40,3 +70,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/T8PROJECTConfig.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake )
 
 install( TARGETS t8project LIBRARY )
+
+#
+# INSTALL section ends here
+#

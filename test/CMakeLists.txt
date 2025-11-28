@@ -69,4 +69,4 @@ function ( add_t8project_cpp_test)
 endfunction()
 
 add_t8project_cpp_test( NAME t8project_gtest_example     SOURCES t8project_gtest_example.cxx )
-
+add_t8project_cpp_test( NAME t8project_gtest_vtk_linkage SOURCES t8project_gtest_vtk_linkage.cxx )
