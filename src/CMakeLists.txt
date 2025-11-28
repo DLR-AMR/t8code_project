@@ -39,7 +39,6 @@ if( T8PROJECT_ENABLE_VTK )
 #    install( FILES
 #     put/header/file/here
 #    DESTINATION include)
-  configure_file (t8project_vtk_linkage.hxx.in t8project_vtk_linkage.hxx @ONLY)
 else ()
     unset ( T8PROJECT_VTK_MAJOR_VERSION )
     unset ( T8PROJECT_VTK_MINOR_VERSION )
