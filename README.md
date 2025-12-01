@@ -8,6 +8,7 @@ It includes testing with Googletest.
 - [ ] Replace all strings "t8project" "T8PROJECT" "t8_project" and similar with your project name. In particular in the CMake files.
 
 
+Note: Currently this project relies on t8code's PR: https://github.com/DLR-AMR/t8code/pull/2010, which is not yet merged.
 
 ## Install
 
