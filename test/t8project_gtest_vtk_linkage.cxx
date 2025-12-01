@@ -29,6 +29,7 @@
  * does nothing and is always passed.
  */
 #include <iostream>
+#include <t8_vtk/t8_vtk_linkage.hxx>
 #include <gtest/gtest.h>
 #include <t8project_vtk_linkage.hxx>
 #if T8PROJECT_ENABLE_VTK
@@ -91,6 +92,15 @@ TEST (t8project_gtest_vtk_linkage, t8project_test_vtk_version_number)
   }
   EXPECT_EQ (T8PROJECT_VTK_MAJOR_VERSION, VTK_MAJOR_VERSION);
   EXPECT_EQ (T8PROJECT_VTK_MINOR_VERSION, VTK_MINOR_VERSION);
+#endif
+}
+
+/* Check whether T8PROJECT_VTK_VERSION_USED equals VTK_MAJOR_VERSION.VTK_MINOR_VERSION */
+TEST (t8project_gtest_vtk_linkage, t8code_compatibility)
+{
+#if T8_ENABLE_VTK
+  EXPECT_EQ (T8PROJECT_VTK_MAJOR_VERSION, T8_MAJOR_VERSION) << "VTK version mismatch. t8code uses a different VTK major version.\n";
+  EXPECT_EQ (T8PROJECT_VTK_MINOR_VERSION, T8_MINOR_VERSION) << "VTK version mismatch. t8code uses a different VTK major version.\n";
 #endif
 }
 
