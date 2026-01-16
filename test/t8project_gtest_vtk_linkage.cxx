@@ -29,53 +29,10 @@
  * does nothing and is always passed.
  */
 #include <iostream>
-#include <t8_vtk/t8_vtk_linkage.hxx>
 #include <gtest/gtest.h>
-#include <t8project_vtk_linkage.hxx>
 #if T8PROJECT_ENABLE_VTK
 #include <vtkUnstructuredGrid.h>
-#include <vtkVersionMacros.h>
 #include <vtkNew.h>
-#endif
-
-/* Test correct macro dependencies.
- * Will throw a compile time error if T8PROJECT_ENABLE_VTK is O
- * but T8PROJECT_VTK_VERSION_USED or T8PROJECT_VTK_MAJOR_VERSION or T8PROJECT_VTK_MINOR_VERSION is defined. */
-#if not T8PROJECT_ENABLE_VTK
-#ifdef T8PROJECT_VTK_VERSION_USED
-#error Configuration error: T8PROJECT_VTK_VERSION_USED is defined despite \
- T8PROJECT_ENABLE_VTK not being defined.
-#endif
-
-#ifdef T8PROJECT_VTK_MAJOR_VERSION
-#error Configuration error: T8PROJECT_VTK_MAJOR_VERSION is defined despite \
- T8PROJECT_ENABLE_VTK not being defined.
-#endif
-
-#ifdef T8PROJECT_VTK_MINOR_VERSION
-#error Configuration error: T8PROJECT_VTK_MINOR_VERSION is defined despite \
- T8PROJECT_ENABLE_VTK not being defined.
-#endif
-#endif
-
-
-/* Test correct macro dependencies.
- * Will throw a compile time error if T8PROJECT_ENABLE_VTK is 1
- * but one of T8PROJECT_VTK_VERSION_USED, T8PROJECT_VTK_MAJOR_VERSION, T8PROJECT_VTK_MINOR_VERSION is not defined.
- */
-#if T8PROJECT_ENABLE_VTK
-#ifndef T8PROJECT_VTK_VERSION_USED
-#error Configuration error: T8PROJECT_ENABLE_VTK is defined despite \
- T8PROJECT_VTK_VERSION_USED not being defined.
-#endif
-#ifndef T8PROJECT_VTK_MAJOR_VERSION
-#error Configuration error: T8PROJECT_ENABLE_VTK is defined despite \
- T8PROJECT_VTK_MAJOR_VERSION not being defined.
-#endif
-#ifndef T8PROJECT_VTK_MINOR_VERSION
-#error Configuration error: T8PROJECT_ENABLE_VTK is defined despite \
- T8PROJECT_VTK_MINOR_VERSION not being defined.
-#endif
 #endif
 
 /* Check whether T8PROJECT_VTK_VERSION_USED equals VTK_MAJOR_VERSION.VTK_MINOR_VERSION */
@@ -90,18 +47,26 @@ TEST (t8project_gtest_vtk_linkage, t8project_test_vtk_version_number)
   if (!strcmp (T8PROJECT_VTK_VERSION_USED, vtk_version)) {
     std::cout << "Using vtk version " << vtk_version << std::endl;
   }
-  EXPECT_EQ (T8PROJECT_VTK_MAJOR_VERSION, VTK_MAJOR_VERSION);
-  EXPECT_EQ (T8PROJECT_VTK_MINOR_VERSION, VTK_MINOR_VERSION);
 #endif
 }
 
-/* Check whether T8PROJECT_VTK_VERSION_USED equals VTK_MAJOR_VERSION.VTK_MINOR_VERSION */
-TEST (t8project_gtest_vtk_linkage, t8code_compatibility)
+/* Check whether T8PROJECT_VTK_VERSION_USED equals T8_VTK_VERSION_USED */
+TEST (t8project_gtest_vtk_linkage, t8project_and_t8code_use_same_vtk_version)
 {
-#if T8_ENABLE_VTK
-  EXPECT_EQ (T8PROJECT_VTK_MAJOR_VERSION, T8_MAJOR_VERSION) << "VTK version mismatch. t8code uses a different VTK major version.\n";
-  EXPECT_EQ (T8PROJECT_VTK_MINOR_VERSION, T8_MINOR_VERSION) << "VTK version mismatch. t8code uses a different VTK major version.\n";
+#if T8PROJECT_ENABLE_VTK
+  EXPECT_FALSE (strcmp (T8PROJECT_VTK_VERSION_USED, T8_VTK_VERSION_USED))
+    << "linked vtk version (" << T8PROJECT_VTK_VERSION_USED << ") does not equal the version t8code was configured with ("
+    << T8_VTK_VERSION_USED << ").\n";
 #endif
+}
+
+TEST (t8project_gtest_vtk_linkage, t8project_uses_vtk_if_t8code_does)
+{
+  #if T8_ENABLE_VTK
+    #if !T8PROJECT_ENABLE_VTK
+      ASSERT_FALSE (true) << "t8code was linked against VTK but t8project was not.";
+    #endif
+  #endif  
 }
 
 /* Check whether we can successfully execute VTK code */
