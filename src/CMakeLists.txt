@@ -22,11 +22,16 @@ install( FILES
 
 # VTK dependent settings.
 if( T8PROJECT_ENABLE_VTK )
-    # Define T8PROJECT_VTK_MAJOR/MINOR_VERSION to true, such that get defined in t8project_vtk_linkage.hxx
-    set ( T8PROJECT_VTK_MAJOR_VERSION 1 )
-    set ( T8PROJECT_VTK_MINOR_VERSION 1 )
+    set ( T8PROJECT_VTK_VERSION_USED "${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" )
+    if (NOT ${T8PROJECT_VTK_VERSION_USED} STREQUAL ${T8CODE_VTK_VERSION_USED})
+        message (FATAL_ERROR "VTK version mismatch. t8code uses ${T8CODE_VTK_VERSION_USED} and this project uses ${T8PROJECT_VTK_VERSION_USED}.")
+    endif ()
     # Set CMake variables for lib target
-    target_compile_definitions( t8project PUBLIC T8PROJECT_VTK_VERSION_USED="${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" )
+
+    # Define T8PROJECT_VTK_VERSION_USED for internal and external use in source files.
+    # Note, external libraries linking against t8code (i.e. using find_package ( T8CODE REQUIRED )) can
+    # use T8PROJECT_VTK_VERSION_USED in source code and in CMake scripts (triggered by config.cmake.in).
+    target_compile_definitions( t8project PUBLIC T8PROJECT_VTK_VERSION_USED="${T8PROJECT_VTK_VERSION_USED}" )
     target_compile_definitions( t8project PUBLIC T8PROJECT_ENABLE_VTK=1 )
     target_include_directories( t8project PUBLIC ${VTK_INCLUDE_DIR} )
     target_link_libraries( t8project PUBLIC ${VTK_LIBRARIES} )
@@ -39,22 +44,7 @@ if( T8PROJECT_ENABLE_VTK )
 #    install( FILES
 #     put/header/file/here
 #    DESTINATION include)
-else ()
-    unset ( T8PROJECT_VTK_MAJOR_VERSION )
-    unset ( T8PROJECT_VTK_MINOR_VERSION )
 endif()
-
-#
-# Setup the file t8project_vtk_linkage.hxx and write macros for the VTK version
-#
-configure_file (t8project_vtk_linkage.hxx.in t8project_vtk_linkage.hxx @ONLY)
-
-
-# install the automatically created t8project_vtk_linkage.hxx into the include folder
-install (FILES 
-    ${CMAKE_CURRENT_BINARY_DIR}/t8project_vtk_linkage.hxx
-    DESTINATION include
-)
 
 # Make this package available as a cmake install package, so 
 # that other projects can find it with find_package.

@@ -19,8 +19,6 @@ project(
   VERSION "${T8PROJECT_VERSION_MAJOR}.${T8PROJECT_VERSION_MINOR}.${T8PROJECT_VERSION_PATCH}"
 )
 
-option( T8PROJECT_ENABLE_VTK "Link against VTK. Must be used if t8code is linked against VTK." OFF )
-
 #
 # Enable "make test" to run all the tests
 #
@@ -37,19 +35,13 @@ set(CMAKE_CXX_COMPILER mpicxx)
 #  -DSC_DIR=PATH,
 find_package ( T8CODE REQUIRED)
 
-#
-# Find VTK library.
-# If t8code is linked against VTK then t8project should link against it as well.
-#
-if( T8PROJECT_ENABLE_VTK )
-    find_package( VTK REQUIRED COMPONENTS
-        IOXML CommonExecutionModel CommonDataModel
-        IOGeometry IOXMLParser IOParallelXML IOPLY
-        ParallelMPI FiltersCore vtksys CommonCore zlib IOLegacy)
-    if(VTK_FOUND)
-        message("Found VTK")
-    endif (VTK_FOUND)
-endif( T8PROJECT_ENABLE_VTK )
+# if t8code is linked against VTK, this project will
+# automatically detect it and link against VTK as well.
+# We set T8PROJECT_ENABLE_VTK to 1 in order to define our own VTK dependent macros in src/CMakeLists.txt
+if (T8CODE_ENABLE_VTK)
+    message ("t8code links against VTK with version ${T8CODE_VTK_VERSION_USED}")
+    set (T8PROJECT_ENABLE_VTK "1")
+endif ()
 
 # Recurse into the "test" subdirectory. This does not actually
 # cause another cmake executable to run. The same process will walk through
