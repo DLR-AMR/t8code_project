@@ -6,6 +6,9 @@
 
 cmake_minimum_required( VERSION 3.16 )
 
+# Fetch thirdparty dependencies (t8code, googletest)
+include(cmake/thirdparty.cmake)
+
 # rudimentary version handling by setting it manually in this file
 set ( ${PROJECT_NAME_UPPER}_VERSION_MAJOR 1 )
 set ( ${PROJECT_NAME_UPPER}_VERSION_MINOR 0 )
@@ -27,15 +30,7 @@ include( CTest )
 set(CMAKE_C_COMPILER mpicc)
 set(CMAKE_CXX_COMPILER mpicxx)
 
-# Searchers for t8code build with CMake
-# To add a seach path use 
-#  -DT8CODE_DIR=PATH,
-#  -DP4EST_DIR=PATH,
-#  -DSC_DIR=PATH,
-find_package ( T8CODE REQUIRED)
-
-# if t8code is linked against VTK, this project will
-# automatically detect it and link against VTK as well.
+# Check if t8code was linked against VTK
 # We set ${PROJECT_NAME_UPPER}_ENABLE_VTK to 1 in order to define our own VTK dependent macros in src/CMakeLists.txt
 if (T8CODE_ENABLE_VTK)
     message ("t8code links against VTK with version ${T8CODE_VTK_VERSION_USED}")

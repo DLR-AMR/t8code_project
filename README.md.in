@@ -13,11 +13,8 @@ cmake ..
 make
 ```
 
-If t8code, sc or p4est are not found by CMake, you can use:
-
-```bash
-cmake -DT8CODE_DIR=path/to/T8CODEConfig.cmake -DP4EST_DIR=path/to/P4ESTConfig.cmake -DSC_DIR=path/to/SCConfig.cmake ..
-```
+Dependencies (t8code and googletest) are automatically fetched from GitHub using CMake's FetchContent.
+No manual installation is required.
 
 We also recommend to use:
 
@@ -55,8 +52,6 @@ src/${PROJECT_NAME_LOWER}_helloworld.cxx and .hxx define a very simple hello wor
 
 Contains tests.
 
-### thirdparty/
+### cmake/
 
-Contains thirdparty libraries.
-This project ships with a copy of googletest-mpi which is compiled and linked to be used in tests.
-In future this copy could be replaced with using FetchContent in CMake (see also https://github.com/DLR-AMR/t8code/issues/1984).
+Contains CMake configuration files for fetching thirdparty dependencies (t8code, googletest) using FetchContent.

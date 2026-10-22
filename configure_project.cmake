@@ -37,6 +37,8 @@ set(TEMPLATES
     "test/t8project_gtest_main.cxx.in"
     "test/t8project_gtest_example.cxx.in"
     "test/t8project_gtest_vtk_linkage.cxx.in"
+    "cmake/thirdparty.cmake.in"
+    "cmake/thirdparty.json"
 )
 
 # Define corresponding output files
@@ -53,6 +55,8 @@ set(OUTPUTS
     "test/${PROJECT_NAME_LOWER}_gtest_main.cxx"
     "test/${PROJECT_NAME_LOWER}_gtest_example.cxx"
     "test/${PROJECT_NAME_LOWER}_gtest_vtk_linkage.cxx"
+    "cmake/thirdparty.cmake"
+    "cmake/thirdparty.json"
 )
 
 # Process each template file
