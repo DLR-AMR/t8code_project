@@ -18,9 +18,9 @@ if(NOT DEFINED PROJECT_NAME_LOWER)
 endif()
 
 # Derive uppercase version
-string(TOUPPER "${PROJECT_NAME_LOWER}" PROJECT_NAME_UPPER)
+string(TOUPPER "@PROJECT_NAME_LOWER@" PROJECT_NAME_UPPER)
 
-message(STATUS "Configuring project as: ${PROJECT_NAME_LOWER} / ${PROJECT_NAME_UPPER}")
+message(STATUS "Configuring project as: @PROJECT_NAME_LOWER@ / @PROJECT_NAME_UPPER@")
 message(STATUS "")
 
 # Define all template files as a list
@@ -38,7 +38,6 @@ set(TEMPLATES
     "test/t8project_gtest_example.cxx.in"
     "test/t8project_gtest_vtk_linkage.cxx.in"
     "cmake/thirdparty.cmake.in"
-    "cmake/thirdparty.json"
 )
 
 # Define corresponding output files
@@ -48,15 +47,14 @@ set(OUTPUTS
     "test/CMakeLists.txt"
     "README.md"
     "CONTRIBUTING.md"
-    "${PROJECT_NAME_LOWER}_main.cxx"
-    "src/${PROJECT_NAME_LOWER}_helloworld.cxx"
-    "src/${PROJECT_NAME_LOWER}_helloworld.hxx"
+    "@PROJECT_NAME_LOWER@_main.cxx"
+    "src/@PROJECT_NAME_LOWER@_helloworld.cxx"
+    "src/@PROJECT_NAME_LOWER@_helloworld.hxx"
     "src/config.cmake.in"
-    "test/${PROJECT_NAME_LOWER}_gtest_main.cxx"
-    "test/${PROJECT_NAME_LOWER}_gtest_example.cxx"
-    "test/${PROJECT_NAME_LOWER}_gtest_vtk_linkage.cxx"
+    "test/@PROJECT_NAME_LOWER@_gtest_main.cxx"
+    "test/@PROJECT_NAME_LOWER@_gtest_example.cxx"
+    "test/@PROJECT_NAME_LOWER@_gtest_vtk_linkage.cxx"
     "cmake/thirdparty.cmake"
-    "cmake/thirdparty.json"
 )
 
 # Process each template file
@@ -81,6 +79,7 @@ foreach(INDEX RANGE ${NUM_TEMPLATES})
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/${TEMPLATE_FILE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/${OUTPUT_FILE}"
+        @ONLY
     )
 endforeach()
 
@@ -109,7 +108,7 @@ file(REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/setup_project.sh")
 
 message(STATUS "")
 message(STATUS "========================================")
-message(STATUS "Project '${PROJECT_NAME_LOWER}' generated successfully!")
+message(STATUS "Project '@PROJECT_NAME_LOWER@' generated successfully!")
 message(STATUS "========================================")
 message(STATUS "")
 message(STATUS "Next steps:")

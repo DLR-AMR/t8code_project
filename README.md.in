@@ -1,4 +1,4 @@
-# ${PROJECT_NAME_LOWER}
+# @PROJECT_NAME_LOWER@
 
 A project using t8code build from the t8code_project template (https://github.com/dlr-amr/t8code_project).
 
@@ -38,15 +38,15 @@ make install
 The basic CMake setting file.
 Note that src/ and test/ folders have their own additional CMake files.
 
-### ${PROJECT_NAME_LOWER}_main.cxx
+### @PROJECT_NAME_LOWER@_main.cxx
 
-A main program to show how to use and link against ${PROJECT_NAME_LOWER} and how to set up t8code.
+A main program to show how to use and link against @PROJECT_NAME_LOWER@ and how to set up t8code.
 
 ### src/
 
 Contains the source and header files of the library.
 
-src/${PROJECT_NAME_LOWER}_helloworld.cxx and .hxx define a very simple hello world function.
+src/@PROJECT_NAME_LOWER@_helloworld.cxx and .hxx define a very simple hello world function.
 
 ### test/
 
