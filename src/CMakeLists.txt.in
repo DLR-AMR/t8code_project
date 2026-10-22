@@ -1,0 +1,70 @@
+#
+# This is the CMake file for the src subfolder.
+# It defines the library to build.
+#
+
+# Create a library called "${PROJECT_NAME_LOWER}" which includes the source files.
+# The extension is already found. Any number of sources could be listed here.
+add_library (${PROJECT_NAME_LOWER} ${PROJECT_NAME_LOWER}_helloworld.cxx)
+
+# Link library against t8code, p4est, sc
+target_link_libraries (${PROJECT_NAME_LOWER} PRIVATE T8CODE::T8 )
+
+# Make sure the compiler can find include files for our ${PROJECT_NAME_LOWER} library
+# when other libraries or executables link to ${PROJECT_NAME_LOWER}
+target_include_directories (${PROJECT_NAME_LOWER} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Add headers files to install in /include folder
+install( FILES
+    ${PROJECT_NAME_LOWER}_helloworld.hxx
+    TYPE INCLUDE
+)
+
+# VTK dependent settings.
+if( ${PROJECT_NAME_UPPER}_ENABLE_VTK )
+    set ( ${PROJECT_NAME_UPPER}_VTK_VERSION_USED "${VTK_MAJOR_VERSION}.${VTK_MINOR_VERSION}" )
+    if (NOT ${${PROJECT_NAME_UPPER}_VTK_VERSION_USED} STREQUAL ${T8CODE_VTK_VERSION_USED})
+        message (FATAL_ERROR "VTK version mismatch. t8code uses ${T8CODE_VTK_VERSION_USED} and this project uses ${${PROJECT_NAME_UPPER}_VTK_VERSION_USED}.")
+    endif ()
+    # Set CMake variables for lib target
+
+    # Define ${PROJECT_NAME_UPPER}_VTK_VERSION_USED for internal and external use in source files.
+    # Note, external libraries linking against t8code (i.e. using find_package ( T8CODE REQUIRED )) can
+    # use ${PROJECT_NAME_UPPER}_VTK_VERSION_USED in source code and in CMake scripts (triggered by config.cmake.in).
+    target_compile_definitions( ${PROJECT_NAME_LOWER} PUBLIC ${PROJECT_NAME_UPPER}_VTK_VERSION_USED="${${PROJECT_NAME_UPPER}_VTK_VERSION_USED}" )
+    target_compile_definitions( ${PROJECT_NAME_LOWER} PUBLIC ${PROJECT_NAME_UPPER}_ENABLE_VTK=1 )
+    target_include_directories( ${PROJECT_NAME_LOWER} PUBLIC ${VTK_INCLUDE_DIR} )
+    target_link_libraries( ${PROJECT_NAME_LOWER} PUBLIC ${VTK_LIBRARIES} )
+    # Internal source files that need VTK linkage to compile:
+#    target_sources(${PROJECT_NAME_UPPER} PRIVATE
+#     put/source/file/here
+#    )
+#    
+    # Installed header files that need VTK linkage:
+#    install( FILES
+#     put/header/file/here
+#    DESTINATION include)
+endif()
+
+# Make this package available as a cmake install package, so 
+# that other projects can find it with find_package.
+include( CMakePackageConfigHelpers )
+
+configure_package_config_file( ${CMAKE_CURRENT_LIST_DIR}/config.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${PROJECT_NAME_UPPER}Config.cmake
+INSTALL_DESTINATION cmake
+)
+
+write_basic_package_version_file(
+${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${PROJECT_NAME_UPPER}ConfigVersion.cmake
+COMPATIBILITY SameMajorVersion
+VERSION "1.0.0"
+)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${PROJECT_NAME_UPPER}Config.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${PROJECT_NAME_UPPER}ConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake )
+
+install( TARGETS ${PROJECT_NAME_LOWER} LIBRARY )
+
+#
