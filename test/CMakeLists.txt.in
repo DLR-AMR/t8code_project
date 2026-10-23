@@ -41,7 +41,7 @@ function( add_@PROJECT_NAME_LOWER@_test )
 
     # Link base libraries.
     target_include_directories( ${ADD_@PROJECT_NAME_UPPER@_TEST_NAME} PRIVATE ${CMAKE_BINARY_DIR}/src )
-    target_link_libraries( ${ADD_@PROJECT_NAME_UPPER@_TEST_NAME} PRIVATE @PROJECT_NAME_LOWER@ T8CODE::T8 googletest pthread )
+    target_link_libraries( ${ADD_@PROJECT_NAME_UPPER@_TEST_NAME} PRIVATE @PROJECT_NAME_LOWER@ T8CODE::T8 GTest::gtest_main pthread )
 
     set_target_properties(${ADD_@PROJECT_NAME_UPPER@_TEST_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${TEST_BUILD_DIR}"
