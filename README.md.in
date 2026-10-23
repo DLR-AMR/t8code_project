@@ -1,4 +1,4 @@
-# ${PROJECT_NAME_LOWER}
+# @PROJECT_NAME_LOWER@
 
 A project using t8code build from the t8code_project template (https://github.com/dlr-amr/t8code_project).
 
@@ -13,11 +13,8 @@ cmake ..
 make
 ```
 
-If t8code, sc or p4est are not found by CMake, you can use:
-
-```bash
-cmake -DT8CODE_DIR=path/to/T8CODEConfig.cmake -DP4EST_DIR=path/to/P4ESTConfig.cmake -DSC_DIR=path/to/SCConfig.cmake ..
-```
+Dependencies (t8code and googletest) are automatically fetched from GitHub using CMake's FetchContent.
+No manual installation is required.
 
 We also recommend to use:
 
@@ -41,22 +38,20 @@ make install
 The basic CMake setting file.
 Note that src/ and test/ folders have their own additional CMake files.
 
-### ${PROJECT_NAME_LOWER}_main.cxx
+### @PROJECT_NAME_LOWER@_main.cxx
 
-A main program to show how to use and link against ${PROJECT_NAME_LOWER} and how to set up t8code.
+A main program to show how to use and link against @PROJECT_NAME_LOWER@ and how to set up t8code.
 
 ### src/
 
 Contains the source and header files of the library.
 
-src/${PROJECT_NAME_LOWER}_helloworld.cxx and .hxx define a very simple hello world function.
+src/@PROJECT_NAME_LOWER@_helloworld.cxx and .hxx define a very simple hello world function.
 
 ### test/
 
 Contains tests.
 
-### thirdparty/
+### cmake/
 
-Contains thirdparty libraries.
-This project ships with a copy of googletest-mpi which is compiled and linked to be used in tests.
-In future this copy could be replaced with using FetchContent in CMake (see also https://github.com/DLR-AMR/t8code/issues/1984).
+Contains CMake configuration files for fetching thirdparty dependencies (t8code, googletest) using FetchContent.

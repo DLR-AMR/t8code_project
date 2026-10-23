@@ -1,4 +1,4 @@
-#include <${PROJECT_NAME_LOWER}_helloworld.hxx>
+#include <@PROJECT_NAME_LOWER@_helloworld.hxx>
 #include <t8.h>
 
 int
@@ -21,7 +21,7 @@ main (int argc, char **argv)
    * You could also set up your own logging functions similar to t8_global_productionf and other, see t8.h/t8.c
    * See t8.h/t8.c for proper wrapper implementations.
    */
-  ${PROJECT_NAME_LOWER}::helloworld();
+  @PROJECT_NAME_LOWER@::helloworld();
 
   sc_finalize ();
 
