@@ -18,9 +18,9 @@ if(NOT DEFINED PROJECT_NAME_LOWER)
 endif()
 
 # Derive uppercase version
-string(TOUPPER "@PROJECT_NAME_LOWER@" PROJECT_NAME_UPPER)
+string(TOUPPER "${PROJECT_NAME_LOWER}" PROJECT_NAME_UPPER)
 
-message(STATUS "Configuring project as: @PROJECT_NAME_LOWER@ / @PROJECT_NAME_UPPER@")
+message(STATUS "Configuring project as: ${PROJECT_NAME_LOWER} / ${PROJECT_NAME_UPPER}")
 message(STATUS "")
 
 # Define all template files as a list
@@ -47,13 +47,13 @@ set(OUTPUTS
     "test/CMakeLists.txt"
     "README.md"
     "CONTRIBUTING.md"
-    "@PROJECT_NAME_LOWER@_main.cxx"
-    "src/@PROJECT_NAME_LOWER@_helloworld.cxx"
-    "src/@PROJECT_NAME_LOWER@_helloworld.hxx"
+    "${PROJECT_NAME_LOWER}_main.cxx"
+    "src/${PROJECT_NAME_LOWER}_helloworld.cxx"
+    "src/${PROJECT_NAME_LOWER}_helloworld.hxx"
     "src/config.cmake.in"
-    "test/@PROJECT_NAME_LOWER@_gtest_main.cxx"
-    "test/@PROJECT_NAME_LOWER@_gtest_example.cxx"
-    "test/@PROJECT_NAME_LOWER@_gtest_vtk_linkage.cxx"
+    "test/${PROJECT_NAME_LOWER}_gtest_main.cxx"
+    "test/${PROJECT_NAME_LOWER}_gtest_example.cxx"
+    "test/${PROJECT_NAME_LOWER}_gtest_vtk_linkage.cxx"
     "cmake/thirdparty.cmake"
 )
 
@@ -75,7 +75,7 @@ foreach(INDEX RANGE ${NUM_TEMPLATES})
     
     message(STATUS "Generating: ${OUTPUT_FILE} from ${TEMPLATE_FILE}")
     
-    # Use configure_file to substitute variables
+    # Use configure_file with @ONLY to only replace @VAR@ and preserve ${VAR}
     configure_file(
         "${CMAKE_CURRENT_SOURCE_DIR}/${TEMPLATE_FILE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/${OUTPUT_FILE}"
@@ -96,9 +96,18 @@ set(ALL_IN_FILES ${IN_FILES} ${IN_FILES_RECURSE} ${IN_FILES_RECURSE_DEEP})
 
 foreach(IN_FILE ${ALL_IN_FILES})
     # Get relative path
+
     file(RELATIVE_PATH IN_FILE_REL "${CMAKE_CURRENT_SOURCE_DIR}" "${IN_FILE}")
-    message(STATUS "Removing: ${IN_FILE_REL}")
-    file(REMOVE "${IN_FILE}")
+    # Check if this .in file is an output file. If so, we do not delete it
+    list(FIND OUTPUTS ${IN_FILE_REL} found_pos)
+    if(found_pos GREATER_EQUAL 0)
+        # .in file is an output file, do not delete.
+        message(STATUS "Skipping: ${IN_FILE_REL}")
+    else()
+        # delete the .in file.
+        message(STATUS "Removing: ${IN_FILE_REL}")
+        file(REMOVE "${IN_FILE}")
+    endif()
 endforeach()
 
 # Remove the configuration scripts themselves
@@ -108,7 +117,7 @@ file(REMOVE "${CMAKE_CURRENT_SOURCE_DIR}/setup_project.sh")
 
 message(STATUS "")
 message(STATUS "========================================")
-message(STATUS "Project '@PROJECT_NAME_LOWER@' generated successfully!")
+message(STATUS "Project '${PROJECT_NAME_LOWER}' generated successfully!")
 message(STATUS "========================================")
 message(STATUS "")
 message(STATUS "Next steps:")

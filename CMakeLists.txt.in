@@ -6,27 +6,28 @@
 
 cmake_minimum_required( VERSION 3.16 )
 
+
+project(
+  @PROJECT_NAME_UPPER@
+  DESCRIPTION "A project that links against the t8code library."
+  LANGUAGES C CXX
+  VERSION "1.0.0"
+)
+
 # rudimentary version handling by setting it manually in this file
 set ( @PROJECT_NAME_UPPER@_VERSION_MAJOR 1 )
 set ( @PROJECT_NAME_UPPER@_VERSION_MINOR 0 )
 set ( @PROJECT_NAME_UPPER@_VERSION_PATCH 0 )
 
-project(
-  @PROJECT_NAME_UPPER@
-  DESCRIPTION "A template for project that link against the t8code library."
-  LANGUAGES C CXX
-  VERSION "1.0.0"
-)
+# Find MPI and set compilers
+find_package(MPI 3.0 COMPONENTS C REQUIRED )
+set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+set(CMAKE_CXX_COMPILER ${MPI_CXX_COMPILER})
 
 #
 # Enable "make test" to run all the tests
 #
 include( CTest )
-
-# Set compilers to mpicc and mpicxx
-set(CMAKE_C_COMPILER mpicc)
-set(CMAKE_CXX_COMPILER mpicxx)
-
 
 # Populate the thirdparty libraries
 include (cmake/thirdparty.cmake)
