@@ -6,6 +6,9 @@ find_dependency( T8CODE CONFIG )
 find_dependency( P4EST CONFIG )
 find_dependency( SC CONFIG )
 
+
+set( @PROJECT_NAME_UPPER@_ENABLE_VTK @@PROJECT_NAME_UPPER@_ENABLE_VTK@ )
+
 if(@PROJECT_NAME_UPPER@_ENABLE_VTK)
     find_dependency(VTK)
     # Expose the variable @PROJECT_NAME_UPPER@_VTK_VERSION_USED to external CMake scripts linking against t8code
