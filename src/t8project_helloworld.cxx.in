@@ -1,11 +1,11 @@
 #include <iostream>
 
-namespace  ${PROJECT_NAME_LOWER} {
+namespace  @PROJECT_NAME_LOWER@ {
 
 void helloworld ()
 {
   /* Print a message on the root process. */
-  std::cout << ("Hello, this is the t8code template project ${PROJECT_NAME_LOWER}.\n");
+  std::cout << ("Hello, this is the t8code template project @PROJECT_NAME_LOWER@.\n");
 }
 
-} // end namespace ${PROJECT_NAME_LOWER}
+} // end namespace @PROJECT_NAME_LOWER@

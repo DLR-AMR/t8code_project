@@ -1,0 +1,14 @@
+{
+    "thirdparty": [
+        {
+            "name": "T8CODE",
+            "depends_on_cmake_option": "",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dlr-amr/t8code.git",
+                "ref": "cda465320094e3179971ea5a09cfab6a35031407",
+                "shallow": "FALSE"
+            }
+        }
+    ]
+}

@@ -1,36 +1,36 @@
 /*
-  This file is part of ${PROJECT_NAME_LOWER}.
-  Copyright (C) 2025 the developers
+  This file is part of @PROJECT_NAME_LOWER@.
+  Copyright (C) @CURRENT_YEAR@ the developers
 
-  ${PROJECT_NAME_LOWER} is free software; you can redistribute it and/or modify
+  @PROJECT_NAME_LOWER@ is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 3 of the License, or
   (at your option) any later version.
 
-  ${PROJECT_NAME_LOWER} is distributed in the hope that it will be useful,
+  @PROJECT_NAME_LOWER@ is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with ${PROJECT_NAME_LOWER}; if not, write to the Free Software Foundation, Inc.,
+  along with @PROJECT_NAME_LOWER@; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-/** file ${PROJECT_NAME_LOWER}_helloworld.hxx
+/** file @PROJECT_NAME_LOWER@_helloworld.hxx
  * This header file declares a basic hello world function.
  */
 
-#ifndef ${PROJECT_NAME_UPPER}_HELLOWORLD_HXX
-#define ${PROJECT_NAME_UPPER}_HELLOWORLD_HXX
+#ifndef @PROJECT_NAME_UPPER@_HELLOWORLD_HXX
+#define @PROJECT_NAME_UPPER@_HELLOWORLD_HXX
 
 #include <iostream>
 
-namespace ${PROJECT_NAME_LOWER} {
+namespace @PROJECT_NAME_LOWER@ {
 
 /** Print a brief hello message. */
 void helloworld ();
 
 }
 
-#endif // ${PROJECT_NAME_UPPER}_HELLOWORLD_HXX
+#endif // @PROJECT_NAME_UPPER@_HELLOWORLD_HXX
