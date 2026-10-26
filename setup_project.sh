@@ -19,6 +19,12 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+if [[ "$1" =~ [[:space:]] ]]
+then
+    echo "Error: Project name '$1' must not contain any spaces, tabs, or newlines." >&2
+    exit 1
+fi
+
 PROJECT_NAME="$1"
 
 echo "=========================================="
